@@ -1,0 +1,32 @@
+# Archivos y directorios generados automáticamente
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+
+# Directorios de IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Archivos temporales
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Configuraciones locales
+local.properties
