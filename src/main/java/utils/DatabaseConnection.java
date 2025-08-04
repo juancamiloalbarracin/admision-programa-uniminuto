@@ -529,4 +529,190 @@ public class DatabaseConnection {
             e.printStackTrace();
         }
     }
+    
+    /**
+     * NUEVO: Métodos para APIs REST propias
+     */
+    
+    /**
+     * Obtener información personal del usuario para API
+     */
+    public java.util.Map<String, String> obtenerInformacionPersonal(String email) {
+        java.util.Map<String, String> info = new java.util.HashMap<>();
+        
+        try {
+            ensureUserExists(email);
+            String sql = "SELECT * FROM informacion_personal WHERE email = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                info.put("nombres", rs.getString("nombres"));
+                info.put("apellidos", rs.getString("apellidos"));
+                info.put("fechaNacimiento", rs.getString("fecha_nacimiento"));
+                info.put("lugarNacimiento", rs.getString("lugar_nacimiento"));
+                info.put("tipoDocumento", rs.getString("tipo_documento"));
+                info.put("numeroDocumento", rs.getString("numero_documento"));
+                info.put("genero", rs.getString("genero"));
+                info.put("estadoCivil", rs.getString("estado_civil"));
+                info.put("direccion", rs.getString("direccion"));
+                info.put("telefono", rs.getString("telefono"));
+                info.put("celular", rs.getString("celular"));
+                info.put("emailPersonal", rs.getString("email_personal"));
+            }
+            
+        } catch (SQLException e) {
+            System.err.println("Error al obtener información personal: " + e.getMessage());
+            e.printStackTrace();
+        }
+        
+        return info;
+    }
+    
+    /**
+     * Guardar información personal del usuario para API
+     */
+    public boolean guardarInformacionPersonal(String email, String nombres, String apellidos, 
+            String fechaNacimiento, String lugarNacimiento, String tipoDocumento, 
+            String numeroDocumento, String genero, String estadoCivil, String direccion, 
+            String telefono, String celular, String emailPersonal) {
+        
+        try {
+            ensureUserExists(email);
+            
+            // Verificar si ya existe información
+            String checkSql = "SELECT 1 FROM informacion_personal WHERE email = ?";
+            PreparedStatement checkPs = connection.prepareStatement(checkSql);
+            checkPs.setString(1, email);
+            ResultSet rs = checkPs.executeQuery();
+            
+            String sql;
+            if (rs.next()) {
+                // Actualizar
+                sql = "UPDATE informacion_personal SET nombres=?, apellidos=?, fecha_nacimiento=?, " +
+                      "lugar_nacimiento=?, tipo_documento=?, numero_documento=?, genero=?, " +
+                      "estado_civil=?, direccion=?, telefono=?, celular=?, email_personal=? " +
+                      "WHERE email=?";
+            } else {
+                // Insertar
+                sql = "INSERT INTO informacion_personal (nombres, apellidos, fecha_nacimiento, " +
+                      "lugar_nacimiento, tipo_documento, numero_documento, genero, estado_civil, " +
+                      "direccion, telefono, celular, email_personal, email) " +
+                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            }
+            
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, nombres);
+            ps.setString(2, apellidos);
+            ps.setString(3, fechaNacimiento);
+            ps.setString(4, lugarNacimiento);
+            ps.setString(5, tipoDocumento);
+            ps.setString(6, numeroDocumento);
+            ps.setString(7, genero);
+            ps.setString(8, estadoCivil);
+            ps.setString(9, direccion);
+            ps.setString(10, telefono);
+            ps.setString(11, celular);
+            ps.setString(12, emailPersonal);
+            ps.setString(13, email);
+            
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+            
+        } catch (SQLException e) {
+            System.err.println("Error al guardar información personal: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    /**
+     * Obtener información académica del usuario para API
+     */
+    public java.util.Map<String, String> obtenerInformacionAcademica(String email) {
+        java.util.Map<String, String> info = new java.util.HashMap<>();
+        
+        try {
+            ensureUserExists(email);
+            String sql = "SELECT * FROM informacion_academica WHERE email = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                info.put("institucionBachillerato", rs.getString("institucion_bachillerato"));
+                info.put("anioBachillerato", rs.getString("anio_bachillerato"));
+                info.put("promedioAcademico", rs.getString("promedio_academico"));
+                info.put("tipoInstitucion", rs.getString("tipo_institucion"));
+                info.put("modalidadEstudio", rs.getString("modalidad_estudio"));
+                info.put("enfasisArea", rs.getString("enfasis_area"));
+                info.put("pruebasEstado", rs.getString("pruebas_estado"));
+                info.put("puntajePruebas", rs.getString("puntaje_pruebas"));
+                info.put("experienciaLaboral", rs.getString("experiencia_laboral"));
+                info.put("certificacionesAdicionales", rs.getString("certificaciones_adicionales"));
+            }
+            
+        } catch (SQLException e) {
+            System.err.println("Error al obtener información académica: " + e.getMessage());
+            e.printStackTrace();
+        }
+        
+        return info;
+    }
+    
+    /**
+     * Guardar información académica del usuario para API
+     */
+    public boolean guardarInformacionAcademica(String email, String institucionBachillerato, 
+            String anioBachillerato, String promedioAcademico, String tipoInstitucion, 
+            String modalidadEstudio, String enfasisArea, String pruebasEstado, 
+            String puntajePruebas, String experienciaLaboral, String certificacionesAdicionales) {
+        
+        try {
+            ensureUserExists(email);
+            
+            // Verificar si ya existe información
+            String checkSql = "SELECT 1 FROM informacion_academica WHERE email = ?";
+            PreparedStatement checkPs = connection.prepareStatement(checkSql);
+            checkPs.setString(1, email);
+            ResultSet rs = checkPs.executeQuery();
+            
+            String sql;
+            if (rs.next()) {
+                // Actualizar
+                sql = "UPDATE informacion_academica SET institucion_bachillerato=?, anio_bachillerato=?, " +
+                      "promedio_academico=?, tipo_institucion=?, modalidad_estudio=?, enfasis_area=?, " +
+                      "pruebas_estado=?, puntaje_pruebas=?, experiencia_laboral=?, " +
+                      "certificaciones_adicionales=? WHERE email=?";
+            } else {
+                // Insertar
+                sql = "INSERT INTO informacion_academica (institucion_bachillerato, anio_bachillerato, " +
+                      "promedio_academico, tipo_institucion, modalidad_estudio, enfasis_area, " +
+                      "pruebas_estado, puntaje_pruebas, experiencia_laboral, certificaciones_adicionales, email) " +
+                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            }
+            
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, institucionBachillerato);
+            ps.setString(2, anioBachillerato);
+            ps.setString(3, promedioAcademico);
+            ps.setString(4, tipoInstitucion);
+            ps.setString(5, modalidadEstudio);
+            ps.setString(6, enfasisArea);
+            ps.setString(7, pruebasEstado);
+            ps.setString(8, puntajePruebas);
+            ps.setString(9, experienciaLaboral);
+            ps.setString(10, certificacionesAdicionales);
+            ps.setString(11, email);
+            
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+            
+        } catch (SQLException e) {
+            System.err.println("Error al guardar información académica: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

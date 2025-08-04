@@ -20,7 +20,43 @@ mi-proyecto-java
 │   └── models                   # Contiene los modelos de datos.
 │       ├── Usuario.java         # Modelo de usuario.
 │       └── Estudiante.java      # Modelo de estudiante.
-├── # Sistema Académico UDC - Migración Web
+├── # Sistema de Admisiones Académicas Web
+
+Aplicación web completa para gestión de solicitudes de admisión académica, migrada desde Java Swing a tecnología web moderna con **APIs REST propias**.
+
+## 🚀 Características Principales
+
+- **Sistema de Autenticación**: Login/registro con validación robusta
+- **Gestión de Información Personal**: Formularios completos con validación
+- **Información Académica**: Registro de antecedentes educativos
+- **Sistema de Radicación**: Creación y seguimiento de solicitudes
+- **APIs REST Propias**: Endpoints JSON para integración con React/Angular
+- **JWT Authentication**: Tokens propios para autenticación
+- **Base de Datos MySQL**: Gestión completa de datos
+- **Interfaz Responsiva**: Compatible con dispositivos móviles
+
+## 🛠️ Tecnologías Utilizadas
+
+### Backend
+- **Java 11** con Servlets
+- **Maven 3.9+** para gestión de dependencias
+- **MySQL 8.0** como base de datos
+- **Jackson** para procesamiento JSON
+- **JWT (jjwt)** para tokens de autenticación
+- **Apache Tomcat 9.0** como servidor web
+
+### APIs REST Propias
+- `/api/auth/*` - Autenticación y manejo de sesiones
+- `/api/info-personal/*` - Gestión de información personal
+- `/api/info-academica/*` - Gestión de información académica
+- `/api/radicar/*` - Sistema de radicación de solicitudes
+
+### Frontend (Opcional - React Integration)
+- **React 18** con hooks modernos
+- **Vite** como build tool
+- **Axios/Fetch** para consumo de APIs
+- **React Router** para navegación
+- **Context API** para estado global
 
 ## ✅ FASE 2 COMPLETADA: Login Web Funcional
 
