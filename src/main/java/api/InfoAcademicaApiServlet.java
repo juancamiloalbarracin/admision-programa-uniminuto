@@ -120,18 +120,19 @@ public class InfoAcademicaApiServlet extends HttpServlet {
             
             // PRESERVADO: Misma lógica de guardado que InfoAcademicaServlet
             DatabaseConnection db = new DatabaseConnection();
-            boolean success = db.guardarInformacionAcademica(
+            boolean success = db.upsertInformacionAcademica(
                 userEmail,
-                infoReq.getInstitucionBachillerato(),
-                infoReq.getAnioBachillerato(),
-                infoReq.getPromedioAcademico(),
-                infoReq.getTipoInstitucion(),
-                infoReq.getModalidadEstudio(),
-                infoReq.getEnfasisArea(),
-                infoReq.getPruebasEstado(),
-                infoReq.getPuntajePruebas(),
-                infoReq.getExperienciaLaboral(),
-                infoReq.getCertificacionesAdicionales()
+                infoReq.getInstitucionBachillerato(), // nivel
+                "", // sede (vacío por ahora)
+                infoReq.getPromedioAcademico(), // grado_academico
+                infoReq.getAnioBachillerato(), // periodo_admision
+                infoReq.getModalidadEstudio(), // metodologia
+                "", // jornada (vacío por ahora)
+                infoReq.getPruebasEstado(), // plan_decision
+                "", // grado_seleccionado (vacío por ahora)
+                "", // pais (vacío por ahora)
+                infoReq.getCertificacionesAdicionales(), // grado_obtenido
+                "" // fecha_graduacion (vacío por ahora)
             );
             db.closeConnection();
             

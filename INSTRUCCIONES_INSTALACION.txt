@@ -1,0 +1,167 @@
+INSTRUCCIONES DE INSTALACION Y CONFIGURACION
+Sistema de Admisiones Web - Aplicacion Java con React
+=======================================================
+
+REQUISITOS DEL SISTEMA
+----------------------
+
+1. JAVA
+   - Java Development Kit (JDK) 11 o superior
+   - Verificar instalacion: java -version
+   - Variable de entorno JAVA_HOME configurada
+
+2. MAVEN
+   - Apache Maven 3.6 o superior
+   - Verificar instalacion: mvn -version
+   - Variable de entorno MAVEN_HOME configurada
+
+3. MYSQL
+   - MySQL Server 8.0 o superior
+   - Puerto predeterminado: 3306
+   - Usuario: root
+   - Contraseña: 123456 (o modificar en DatabaseConnection.java)
+
+4. NODE.JS
+   - Node.js 16.0 o superior
+   - npm 8.0 o superior
+   - Verificar instalacion: node -version y npm -version
+
+CONFIGURACION DE BASE DE DATOS
+-------------------------------
+
+1. Iniciar MySQL Server
+2. Crear base de datos:
+   mysql -u root -p123456 -e "CREATE DATABASE app_administrativa"
+
+3. Ejecutar scripts de creacion de tablas:
+   mysql -u root -p123456 app_administrativa < CREATE_TABLES.sql
+
+4. Verificar tablas creadas:
+   - usuarios
+   - informacion_personal
+   - informacion_academica
+   - radicados
+
+CONFIGURACION DEL PROYECTO
+---------------------------
+
+1. BACKEND (Java/Maven)
+   a) Navegar al directorio raiz del proyecto
+   b) Compilar el proyecto:
+      mvn clean compile
+   c) Instalar dependencias:
+      mvn install
+
+2. FRONTEND (React/Vite)
+   a) Navegar al directorio frontend:
+      cd frontend
+   b) Instalar dependencias:
+      npm install
+
+INICIALIZACION DE SERVIDORES
+-----------------------------
+
+1. SERVIDOR BACKEND
+   Comando: mvn tomcat7:run
+   Puerto: 8080
+   URL: http://localhost:8080
+   
+   Endpoints disponibles:
+   - POST /api/auth/login
+   - GET /api/info-personal/get
+   - POST /api/info-personal/save
+   - GET /api/info-academica/get
+   - POST /api/info-academica/save
+   - GET /api/solicitudes/list
+   - POST /api/solicitudes/radicar
+
+2. SERVIDOR FRONTEND
+   Comando: cd frontend && npm run dev
+   Puerto: 5174
+   URL: http://localhost:5174
+
+ESTRUCTURA DE ARCHIVOS IMPORTANTES
+-----------------------------------
+
+Configuracion de base de datos:
+- src/utils/DatabaseConnection.java
+
+APIs principales:
+- src/main/java/api/AuthApiServlet.java
+- src/main/java/api/InfoPersonalApiServlet.java
+- src/main/java/api/InfoAcademicaApiServlet.java
+- src/main/java/api/SolicitudesApiServlet.java
+
+Frontend React:
+- frontend/src/App.jsx
+- frontend/src/services/api.js
+
+SOLUCION DE PROBLEMAS COMUNES
+------------------------------
+
+1. Error "Port already in use":
+   - Puerto 8080: netstat -ano | findstr :8080
+   - Terminar proceso: taskkill /PID [numero] /F
+   - Puerto 5174: netstat -ano | findstr :5174
+   - Terminar proceso: taskkill /PID [numero] /F
+
+2. Error de conexion a base de datos:
+   - Verificar que MySQL este ejecutandose
+   - Verificar credenciales en DatabaseConnection.java
+   - Verificar que la base de datos app_administrativa exista
+
+3. Error de compilacion Maven:
+   - Ejecutar: mvn clean
+   - Ejecutar: mvn compile
+   - Verificar version de Java
+
+4. Error en frontend:
+   - Eliminar node_modules: rm -rf node_modules
+   - Reinstalar: npm install
+   - Limpiar cache: npm cache clean --force
+
+CONFIGURACION DE CORS
+----------------------
+
+El backend esta configurado para aceptar peticiones desde:
+- http://localhost:5174 (desarrollo)
+- http://localhost:3000 (alternativo)
+
+Para modificar, editar el filtro CORS en:
+src/main/java/filters/CharacterEncodingFilter.java
+
+SCRIPTS AUXILIARES
+-------------------
+
+- instalar.bat: Script automatico de instalacion
+- test-fase1.bat: Script de pruebas
+- fix-inputs.js: Script de correccion de formularios
+
+NOTAS IMPORTANTES
+-----------------
+
+1. El sistema utiliza sesiones HTTP para autenticacion
+2. Las APIs requieren login previo excepto /api/auth/login
+3. Los datos se almacenan en MySQL con codificacion UTF-8
+4. El frontend utiliza Vite para desarrollo rapido
+5. La aplicacion esta configurada para entorno de desarrollo
+
+ORDEN DE INICIO RECOMENDADO
+----------------------------
+
+1. Verificar que MySQL este ejecutandose
+2. Iniciar servidor backend (mvn tomcat7:run)
+3. Esperar mensaje "Starting ProtocolHandler"
+4. Iniciar servidor frontend (cd frontend && npm run dev)
+5. Acceder a http://localhost:5174
+
+CONTACTO Y SOPORTE
+------------------
+
+Para problemas de configuracion, verificar:
+- Logs de Maven en la consola
+- Logs de Vite en la consola
+- Estado de servicios MySQL
+- Conectividad de red en puertos 3306, 8080, 5174
+
+Fecha de documentacion: Agosto 2025
